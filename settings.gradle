@@ -1,0 +1,29 @@
+pluginManagement {
+    repositories {
+        gradlePluginPortal()
+        maven {
+            name = 'Fabric'
+            url = 'https://maven.fabricmc.net/'
+        }
+        maven {
+            name = 'Ornithe Releases'
+            url = 'https://maven.ornithemc.net/releases'
+        }
+        maven {
+            name = 'Ornithe Snapshots'
+            url = 'https://maven.ornithemc.net/snapshots'
+        }
+        gradlePluginPortal()
+    }
+}
+
+plugins {
+    id 'org.gradle.toolchains.foojay-resolver-convention' version '0.8.0'
+}
+
+rootProject.name = 'spark'
+include (
+        'spark-api',
+        'spark-common',
+        'spark-fabric'
+)

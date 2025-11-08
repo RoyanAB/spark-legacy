@@ -1,0 +1,96 @@
+import net.fabricmc.loom.task.RemapJarTask
+
+plugins {
+    id 'fabric-loom' version '1.11-SNAPSHOT'
+    id 'ploceus' version '1.11-SNAPSHOT'
+    id 'com.gradleup.shadow'
+}
+
+tasks.withType(JavaCompile) {
+    // override, compile targeting J21
+    options.release = 21
+}
+
+repositories {
+    maven { url 'https://maven.fabricmc.net/' }
+    maven {
+        url 'https://maven.nucleoid.xyz/'
+        content {
+            includeGroup('eu.pb4')
+        }
+    }
+    mavenLocal()
+}
+
+configurations {
+    shade
+    implementation.extendsFrom shade
+}
+
+dependencies {
+    minecraft "com.mojang:minecraft:1.12.2"
+    mappings ploceus.featherMappings('28')
+    exceptions ploceus.raven('1') // remove this line if not using exceptions patches
+    signatures ploceus.sparrow('1') // remove this line if not using generics patches
+
+    modImplementation "net.fabricmc:fabric-loader:0.17.3"
+
+    ploceus.dependOsl('0.16.3')
+
+    shade project(':spark-common')
+}
+
+processResources {
+    inputs.property 'version', project.version
+
+    from(sourceSets.main.resources.srcDirs) {
+        include 'fabric.mod.json'
+        expand (
+                'pluginVersion': project.pluginVersion,
+                'pluginDescription': project.pluginDescription
+        )
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'fabric.mod.json'
+    }
+}
+
+license {
+    exclude '**/smap/SourceMap.java'
+}
+
+shadowJar {
+    archiveFileName = "spark-fabric-${project.pluginVersion}-dev.jar"
+    configurations = [project.configurations.shade]
+
+    relocate 'net.kyori.adventure', 'me.lucko.spark.lib.adventure'
+    relocate 'net.kyori.examination', 'me.lucko.spark.lib.adventure.examination'
+    relocate 'net.kyori.option', 'me.lucko.spark.lib.adventure.option'
+    relocate 'net.bytebuddy', 'me.lucko.spark.lib.bytebuddy'
+    relocate 'com.google.protobuf', 'me.lucko.spark.lib.protobuf'
+//    relocate 'org.objectweb.asm', 'me.lucko.spark.lib.asm'
+    relocate 'one.profiler', 'me.lucko.spark.lib.asyncprofiler'
+    relocate 'me.lucko.bytesocks.client', 'me.lucko.spark.lib.bytesocks'
+    relocate 'org.java_websocket', 'me.lucko.spark.lib.bytesocks.ws'
+
+    project.applyExcludes(delegate)
+
+    dependencies {
+        exclude(dependency('org.ow2.asm::'))
+    }
+}
+
+task remappedShadowJar(type: RemapJarTask) {
+    dependsOn tasks.shadowJar
+    input = tasks.shadowJar.archiveFile
+    addNestedDependencies = true
+    archiveFileName = "spark-${project.pluginVersion}-fabric.jar"
+}
+
+tasks.assemble.dependsOn tasks.remappedShadowJar
+
+artifacts {
+    archives remappedShadowJar
+    shadow shadowJar
+}

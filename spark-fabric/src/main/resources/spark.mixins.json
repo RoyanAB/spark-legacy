@@ -1,0 +1,10 @@
+{
+  "required": true,
+  "package": "me.lucko.spark.fabric.mixin",
+  "client": [
+  ],
+  "mixins": [
+    "MinecraftServerAccessor"
+  ],
+  "plugin": "me.lucko.spark.fabric.plugin.FabricSparkMixinPlugin"
+}

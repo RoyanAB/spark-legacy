@@ -1,0 +1,32 @@
+{
+    "schemaVersion": 1,
+    "id": "spark",
+    "name": "spark",
+    "version": "${pluginVersion}",
+    "description": "${pluginDescription}",
+    "authors": [
+        "Luck",
+        "AB"
+    ],
+    "icon": "assets/spark/icon.png",
+    "contact": {
+        "homepage": "https://spark.lucko.me/",
+        "sources": "https://github.com/RoyanAB/spark-legacy",
+        "issues": "https://github.com/RoyanAB/spark-legacy/issues"
+    },
+    "license": "GNU General Public License v3.0",
+    "environment": "*",
+    "entrypoints": {
+        "init": [
+            "me.lucko.spark.fabric.FabricSparkMod"
+        ]
+    },
+    "mixins": [
+        "spark.mixins.json"
+    ],
+    "depends": {
+        "minecraft": "1.12.x",
+        "fabricloader": ">=0.14.23",
+        "osl": ">=0.11.2"
+    }
+}
