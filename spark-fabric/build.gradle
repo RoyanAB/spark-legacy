@@ -8,7 +8,7 @@ plugins {
 
 tasks.withType(JavaCompile) {
     // override, compile targeting J21
-    options.release = 21
+    options.release = 8
 }
 
 repositories {
