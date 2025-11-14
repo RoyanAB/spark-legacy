@@ -3,13 +3,6 @@ plugins {
     id 'maven-publish'
 }
 
-license {
-    exclude '**/sampler/async/jfr/**'
-    exclude {
-        it.file.toString().startsWith(buildDir.toString())
-    }
-}
-
 dependencies {
     api project(':spark-api')
     implementation 'tools.profiler:async-profiler:4.2' // spark native version: 8f7e4e1 (v4.2)

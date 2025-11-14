@@ -6,6 +6,7 @@
     "description": "${pluginDescription}",
     "authors": [
         "Luck",
+        "Fallen_Breath",
         "AB"
     ],
     "icon": "assets/spark/icon.png",
@@ -27,6 +28,7 @@
     "depends": {
         "minecraft": "1.12.x",
         "fabricloader": ">=0.14.23",
-        "osl": ">=0.11.2"
+        "osl-lifecycle-events": "*",
+        "osl-entrypoints": "*"
     }
 }

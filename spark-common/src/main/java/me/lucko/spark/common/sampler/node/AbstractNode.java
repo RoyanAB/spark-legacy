@@ -37,7 +37,7 @@ public abstract class AbstractNode {
     protected static final int MAX_STACK_DEPTH = Integer.getInteger("spark.maxStackDepth", 300);
 
     /** A map of the nodes children */
-    private final Map<StackTraceNode.Description, StackTraceNode> children = new ConcurrentHashMap<>();
+    public Map<StackTraceNode.Description, StackTraceNode> children = new ConcurrentHashMap<>();
 
     /** The accumulated sample time for this node, measured in microseconds */
     // Integer key = the window (effectively System.currentTimeMillis() / 60_000)

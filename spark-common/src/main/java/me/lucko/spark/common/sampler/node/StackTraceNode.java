@@ -35,7 +35,7 @@ public final class StackTraceNode extends AbstractNode {
     public static final int NULL_LINE_NUMBER = -1;
 
     /** A description of the element */
-    private final Description description;
+    public Description description;
 
     public StackTraceNode(Description description) {
         this.description = description;

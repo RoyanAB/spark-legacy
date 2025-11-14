@@ -36,8 +36,8 @@ dependencies {
     modImplementation "net.fabricmc:fabric-loader:0.17.3"
 
     ploceus.dependOsl('0.16.3')
-
     shade project(':spark-common')
+    include(implementation("net.fabricmc:tiny-mappings-parser:0.3.0+build.17"))
 }
 
 processResources {
@@ -54,10 +54,6 @@ processResources {
     from(sourceSets.main.resources.srcDirs) {
         exclude 'fabric.mod.json'
     }
-}
-
-license {
-    exclude '**/smap/SourceMap.java'
 }
 
 shadowJar {

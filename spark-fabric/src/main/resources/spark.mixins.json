@@ -4,6 +4,7 @@
   "client": [
   ],
   "mixins": [
+    "AbstractSamplerMixin",
     "MinecraftServerAccessor"
   ],
   "plugin": "me.lucko.spark.fabric.plugin.FabricSparkMixinPlugin"

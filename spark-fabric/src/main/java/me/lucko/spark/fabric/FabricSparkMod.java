@@ -20,6 +20,7 @@
 
 package me.lucko.spark.fabric;
 
+import me.lucko.spark.fabric.deobfuscator.StackTraceDeobfuscator;
 import me.lucko.spark.fabric.plugin.FabricServerSparkPlugin;
 import net.fabricmc.loader.api.FabricLoader;
 import net.fabricmc.loader.api.ModContainer;
@@ -27,6 +28,8 @@ import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.command.handler.CommandRegistry;
 import net.ornithemc.osl.entrypoints.api.ModInitializer;
 import net.ornithemc.osl.lifecycle.api.server.MinecraftServerEvents;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.nio.file.Path;
 
@@ -37,6 +40,8 @@ public class FabricSparkMod implements ModInitializer {
     private Path configDirectory;
 
     private FabricServerSparkPlugin activeServerPlugin = null;
+
+    public static final Logger LOGGER = LogManager.getLogger("Spark");
 
     @Override
     public void init() {
@@ -51,6 +56,7 @@ public class FabricSparkMod implements ModInitializer {
         MinecraftServerEvents.START.register(this::initializeServer);
         MinecraftServerEvents.STOP.register(this::onServerStopping);
         MinecraftServerEvents.TICK_END.register(this::ServerTickEvents_END_SERVER_TICK);
+        StackTraceDeobfuscator.fetchMapping();
     }
 
     // server
